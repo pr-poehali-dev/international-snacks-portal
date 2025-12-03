@@ -28,7 +28,11 @@ const galleryImages = [
   'https://cdn.poehali.dev/projects/0af3dce6-c981-465c-8e7a-e684707ec66f/files/8c6de12b-a8e7-449e-b4b2-f6d64b03c202.jpg',
   'https://cdn.poehali.dev/projects/0af3dce6-c981-465c-8e7a-e684707ec66f/files/6017eac6-03d9-499a-8a18-b4c5599d0acd.jpg',
   'https://cdn.poehali.dev/projects/0af3dce6-c981-465c-8e7a-e684707ec66f/files/bcba40a7-3653-4d82-92d9-07b2756e1087.jpg',
+  'https://cdn.poehali.dev/projects/0af3dce6-c981-465c-8e7a-e684707ec66f/files/1a902b36-e896-454a-a2db-b4b6d1df9373.jpg',
 ];
+
+const heroImage = 'https://cdn.poehali.dev/projects/0af3dce6-c981-465c-8e7a-e684707ec66f/files/c2e41666-4a33-40d7-ba59-2a8c119a849f.jpg';
+const logoImage = 'https://cdn.poehali.dev/projects/0af3dce6-c981-465c-8e7a-e684707ec66f/files/c4b03de3-1844-462a-add7-1e1d87a376fd.jpg';
 
 export default function Index() {
   const [selectedBoxes, setSelectedBoxes] = useState<number[]>([]);
@@ -51,8 +55,8 @@ export default function Index() {
       <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
-              <span className="text-3xl">🌍</span>
+            <h1 className="text-xl font-semibold text-foreground/80 flex items-center gap-3">
+              <img src={logoImage} alt="SnackWorld" className="w-10 h-10 rounded-full object-cover" />
               SnackWorld
             </h1>
             <div className="hidden md:flex gap-6">
@@ -75,53 +79,59 @@ export default function Index() {
         </div>
       </nav>
 
-      <section id="главная" className="py-20 px-4">
-        <div className="container mx-auto text-center animate-fade-in">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-            Вкусы со всего мира<br />в одном месте
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Магазин заграничных снеков и уютное кафе, где можно собрать свой уникальный бокс 
-            или насладиться лапшой быстрого приготовления
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Button size="lg" onClick={() => scrollToSection('боксы')} className="gap-2">
-              <Icon name="Package" size={20} />
-              Собрать бокс
-            </Button>
-            <Button size="lg" variant="outline" onClick={() => scrollToSection('меню')} className="gap-2">
-              <Icon name="UtensilsCrossed" size={20} />
-              Посмотреть меню
-            </Button>
+      <section id="главная" className="relative min-h-[600px] flex items-center px-4 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src={heroImage} alt="Hero" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/50" />
+        </div>
+        <div className="container mx-auto relative z-10 animate-fade-in">
+          <div className="max-w-2xl">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground leading-tight">
+              Вкусы со всего мира<br />в одном месте
+            </h2>
+            <p className="text-xl md:text-2xl text-foreground/70 mb-10 leading-relaxed">
+              Магазин заграничных снеков и уютное кафе, где можно собрать свой уникальный бокс 
+              или насладиться лапшой быстрого приготовления
+            </p>
+            <div className="flex gap-4 flex-wrap">
+              <Button size="lg" onClick={() => scrollToSection('боксы')} className="gap-2 text-lg px-8 py-6">
+                <Icon name="Package" size={24} />
+                Собрать бокс
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => scrollToSection('меню')} className="gap-2 text-lg px-8 py-6 bg-background/50 backdrop-blur">
+                <Icon name="UtensilsCrossed" size={24} />
+                Посмотреть меню
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="боксы" className="py-16 px-4 bg-muted/30">
+      <section id="боксы" className="py-24 px-4 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">Конструктор тематических боксов</h2>
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             Выберите готовую тематику или соберите свой уникальный набор снеков. 
             Идеально для подарка или вечеринки!
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {boxThemes.map((box) => (
               <Card 
                 key={box.id} 
-                className={`cursor-pointer transition-all hover:shadow-lg hover:scale-105 ${
-                  selectedBoxes.includes(box.id) ? 'ring-2 ring-primary' : ''
+                className={`cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-2 ${
+                  selectedBoxes.includes(box.id) ? 'border-primary shadow-xl' : 'border-transparent'
                 }`}
                 onClick={() => toggleBox(box.id)}
               >
-                <CardHeader className="text-center">
-                  <div className="text-6xl mb-4">{box.emoji}</div>
-                  <CardTitle className="text-xl">{box.name}</CardTitle>
-                  <CardDescription>{box.description}</CardDescription>
+                <CardHeader className="text-center pb-4">
+                  <div className="text-7xl mb-6 transform transition-transform hover:scale-110">{box.emoji}</div>
+                  <CardTitle className="text-2xl mb-3">{box.name}</CardTitle>
+                  <CardDescription className="text-base">{box.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="text-center">
-                  <p className="text-2xl font-bold text-primary mb-4">{box.price}</p>
+                <CardContent className="text-center pt-4 border-t">
+                  <p className="text-3xl font-bold text-primary mb-4">{box.price}</p>
                   {selectedBoxes.includes(box.id) && (
-                    <Badge className="bg-primary">Выбран</Badge>
+                    <Badge className="bg-primary text-base py-1 px-4">✓ Выбран</Badge>
                   )}
                 </CardContent>
               </Card>
@@ -190,22 +200,24 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="галерея" className="py-16 px-4">
+      <section id="галерея" className="py-24 px-4 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">Фотогалерея</h2>
-          <p className="text-center text-muted-foreground mb-12">
+          <p className="text-center text-muted-foreground mb-12 text-lg">
             Загляните в атмосферу нашего кафе
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {galleryImages.map((img, idx) => (
               <div 
                 key={idx} 
-                className="aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                className={`overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group ${
+                  idx === 0 ? 'md:col-span-2 md:row-span-2' : 'aspect-square'
+                }`}
               >
                 <img 
                   src={img} 
                   alt={`Фото ${idx + 1}`} 
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
             ))}
